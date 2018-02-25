@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>res/sound/pop.wav</file>
+    </qresource>
+</RCC>

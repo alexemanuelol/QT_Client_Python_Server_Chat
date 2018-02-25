@@ -5,6 +5,7 @@
 #include <QtNetwork/QTcpSocket>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QMediaPlayer>
 #include <qDebug>
 
 namespace Ui {
@@ -20,6 +21,7 @@ public:
     ~ChatClient();
 
     void keyPressEvent(QKeyEvent * event);
+    void paintEvent(QPaintEvent* event);
 
 private:
     Ui::ChatClient *ui;
@@ -27,7 +29,11 @@ private:
     int PORT_connect;
     QString IP_connect;
     QString message;
+    QString messageDC;
     QString server_message;
+
+    QMediaPlayer* messageSound;
+
     bool isConnected;
 
 private slots:
