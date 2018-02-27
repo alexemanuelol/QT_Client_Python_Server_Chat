@@ -7,12 +7,7 @@ ChatClient::ChatClient(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    /* Hide title bar */
-    this->setWindowFlags(Qt::CustomizeWindowHint);
-    // https://stackoverflow.com/questions/43319368/i-want-to-create-a-custom-title-bar-in-qt
-
-    /* Set Window name to "Chat Client" */
-    this->setWindowTitle(QString::fromUtf8("Chat Client"));
+    errorMessageBox = new QMessageBox;
 
     /* Set background color */
     this->setStyleSheet("ChatClient {background: QColor(66,0,73);}");
@@ -47,40 +42,48 @@ void ChatClient::keyPressEvent(QKeyEvent* event)
         send_text();
 }
 
-void ChatClient::paintEvent(QPaintEvent* event)
-{
-
-}
-
 void ChatClient::connect_server()
 {
     IP_connect = ui->IP_line->text();
     PORT_connect = ui->PORT_line->text().split(" ")[0].toInt();
 
-    socket->connectToHost(IP_connect, PORT_connect);
+    if (!isConnected)
+        socket->connectToHost(IP_connect, PORT_connect);
 
     if (!socket->waitForConnected(100))
-        QMessageBox::about(this, "Woops", "Unable to connect to server...");
+    {
+        messageError = "Unable to connect to:\nIP:         ";
+        messageError.append(IP_connect);
+        messageError.append("\nPORT:   ");
+        messageError.append(QString::number(PORT_connect));
+        errorMessageBox->critical(this, "Error", messageError);
+    }
     else
+    {
         isConnected = true;
-
-    ui->send_line->setPlaceholderText("Enter message here");
-    ui->send_line->setEnabled(1);
+        ui->send_line->setPlaceholderText("Enter message here");
+        ui->send_line->setEnabled(1);
+    }
 }
 
 void ChatClient::disconnect_server()
 {
-    messageDC = "disconnect";
-    messageDC.append(socket->peerName());
-    messageDC.append(":");
-    messageDC.append(QString::number(socket->localPort()));
+    if (isConnected)
+    {
+        messageDC = "disconnect";
+        messageDC.append(socket->peerName());
+        messageDC.append(":");
+        messageDC.append(QString::number(socket->localPort()));
 
-    socket->write(messageDC.toUtf8());
+        socket->write(messageDC.toUtf8());
 
-    isConnected = false;
-    ui->send_line->setDisabled(1);
-    ui->send_line->setText("");
-    ui->send_line->setPlaceholderText("");
+        isConnected = false;
+        ui->send_line->setDisabled(1);
+        ui->send_line->setText("");
+        ui->send_line->setPlaceholderText("");
+    }
+    else
+        errorMessageBox->critical(this, "Error", "You are not connected to a server...");
 }
 
 void ChatClient::send_text()
@@ -88,15 +91,10 @@ void ChatClient::send_text()
     message = ui->send_line->text();
     ui->send_line->setText("");
 
-    /* Commands */
-    if (message == "!clear")
-        ui->text_feed->clear();
-    else if (!message.isEmpty() && isConnected)
+    if (!message.isEmpty() && isConnected)
         socket->write(message.toUtf8());
     else if (message.isEmpty() && isConnected)
-        QMessageBox::about(this, "Woops", "You have nothing to send...");
-    else
-        QMessageBox::about(this, "Woops", "You are not connected to a server...");
+        errorMessageBox->critical(this, "Error", "You have nothing to send...");
 }
 
 void ChatClient::readFromServer()
@@ -107,9 +105,5 @@ void ChatClient::readFromServer()
         messageSound->play();
 
     server_message = socket->readAll();
-
-    //ui->text_feed->moveCursor(QTextCursor::Start);
-    //ui->text_feed->insertPlainText(server_message);
-
     ui->text_feed->append(server_message);
 }
