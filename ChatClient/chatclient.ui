@@ -96,7 +96,55 @@
 	color: white;
 }
 
-</string>
+QScrollBar:vertical
+{
+	background: rgb(43, 44, 49);
+  	border-top-right-radius:2px;
+  	border-bottom-right-radius:2px;
+  	width:16px;
+  	margin:0px;
+}
+
+QScrollBar::handle:vertical
+{
+	background-color:rgb(33, 34, 38);
+  	border-radius:2px;
+  	min-height:20px;
+  	margin:2px 4px 2px 4px;
+}
+
+QScrollBar::add-line:vertical
+{
+	background: none;
+  	height:0px;
+  	subcontrol-position:right;
+  	subcontrol-origin:margin;
+}
+
+QScrollBar::sub-line:vertical
+{
+	background: none;
+  	height:0px;
+  	subcontrol-position:left;
+  	subcontrol-origin:margin;
+}
+
+QScrollBar::add-page:vertical
+{
+	background: none;
+}
+
+QScrollBar::sub-page:vertical
+{
+	background: none
+}</string>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Whitney'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -434,13 +482,13 @@ p, li { white-space: pre-wrap; }
            <number>8</number>
           </property>
           <property name="topMargin">
-           <number>20</number>
+           <number>5</number>
           </property>
           <property name="rightMargin">
            <number>8</number>
           </property>
           <property name="bottomMargin">
-           <number>20</number>
+           <number>8</number>
           </property>
           <item>
            <widget class="QLineEdit" name="send_line">
