@@ -11,7 +11,6 @@ ChatClient::ChatClient(QWidget *parent) :
 
     /* Set fixed size */
     ui->send_line->setFixedHeight(45);
-    ui->IP_line->setFixedWidth(100);
     ui->PORT_line->setFixedWidth(100);
     ui->nickname->setFixedWidth(100);
     ui->connect_button->setFixedWidth(100);

@@ -163,57 +163,6 @@
           <property name="verticalSpacing">
            <number>2</number>
           </property>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="nickname">
-            <property name="styleSheet">
-             <string notr="true">QLineEdit
-{
-	border: 0px;
-	border-radius: 2;
-	background: rgb(54, 57, 62);
-	font-family: Whitney; 
-	font-style: normal; 
-	font-size: 10pt; 
-	color: rgb(197, 198, 200);
-}
-
-QLineEdit:disabled
-{
-	background: rgb(33, 34, 38);;
-}</string>
-            </property>
-            <property name="placeholderText">
-             <string>Insert Nickname</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLineEdit" name="IP_line">
-            <property name="styleSheet">
-             <string notr="true">QLineEdit
-{
-	border: 0px;
-	border-radius: 2;
-	background: rgb(54, 57, 62);
-	font-family: Whitney; 
-	font-style: normal; 
-	font-size: 10pt; 
-	color: rgb(197, 198, 200);
-}
-
-QLineEdit:disabled
-{
-	background: rgb(33, 34, 38);;
-}</string>
-            </property>
-            <property name="text">
-             <string>127.0.0.1</string>
-            </property>
-            <property name="placeholderText">
-             <string>Insert Server IP</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="3">
            <widget class="QPushButton" name="disconnect_button">
             <property name="sizePolicy">
@@ -229,7 +178,7 @@ QLineEdit:disabled
 	Background: rgb(48, 49, 54);
 	font-family: Whitney; 
 	font-style: normal; 
-	font-size: 10pt; 
+	font-size: 13pt; 
 	color: rgb(197, 198, 200);
 }
 
@@ -241,36 +190,6 @@ QPushButton:hover
             </property>
             <property name="text">
              <string>Disconnect</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="connect_button">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton
-{
-	border: none;
-	Background: rgb(48, 49, 54);
-	font-family: Whitney; 
-	font-style: normal; 
-	font-size: 10pt; 
-	color: rgb(197, 198, 200);
-}
-
-QPushButton:hover
-{
-	font-size: 14pt; 
-	color: rgb(197, 198, 200);
-}</string>
-            </property>
-            <property name="text">
-             <string>Connect</string>
             </property>
            </widget>
           </item>
@@ -314,6 +233,36 @@ QLineEdit:disabled
             </property>
            </spacer>
           </item>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="connect_button">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+	border: none;
+	Background: rgb(48, 49, 54);
+	font-family: Whitney; 
+	font-style: normal; 
+	font-size: 13pt; 
+	color: rgb(197, 198, 200);
+}
+
+QPushButton:hover
+{
+	font-size: 14pt; 
+	color: rgb(197, 198, 200);
+}</string>
+            </property>
+            <property name="text">
+             <string>Connect</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="2">
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
@@ -327,18 +276,56 @@ QLineEdit:disabled
             </property>
            </spacer>
           </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLineEdit" name="IP_line">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit
+{
+	border: 0px;
+	border-radius: 2;
+	background: rgb(54, 57, 62);
+	font-family: Whitney; 
+	font-style: normal; 
+	font-size: 10pt; 
+	color: rgb(197, 198, 200);
+}
+
+QLineEdit:disabled
+{
+	background: rgb(33, 34, 38);;
+}</string>
+            </property>
+            <property name="text">
+             <string>alexchatclient.ddns.net</string>
+            </property>
+            <property name="placeholderText">
+             <string>Insert Server IP</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="1">
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+           <widget class="QLineEdit" name="nickname">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit
+{
+	border: 0px;
+	border-radius: 2;
+	background: rgb(54, 57, 62);
+	font-family: Whitney; 
+	font-style: normal; 
+	font-size: 10pt; 
+	color: rgb(197, 198, 200);
+}
+
+QLineEdit:disabled
+{
+	background: rgb(33, 34, 38);;
+}</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
+            <property name="placeholderText">
+             <string>Insert Nickname</string>
             </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
         </widget>

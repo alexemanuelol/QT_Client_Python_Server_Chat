@@ -15,8 +15,6 @@ CustomFrameWindow::CustomFrameWindow(QWidget *parent): QWidget(parent)
 
     restoreButton->setVisible(false);
 
-    this->
-
     /* Fix size of title bar and buttons */
     windowTitlebar->setFixedHeight(22);
     closeButton->setFixedWidth(28);

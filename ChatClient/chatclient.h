@@ -7,7 +7,6 @@
 #include <QKeyEvent>
 #include <QMediaPlayer>
 #include <QScrollBar>
-#include <qDebug>
 
 namespace Ui {
 class ChatClient;
