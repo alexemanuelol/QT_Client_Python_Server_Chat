@@ -9,12 +9,16 @@ ChatClient::ChatClient(QWidget *parent) :
 
     errorMessageBox = new QMessageBox;
 
-    /* Set background color */
-    this->setStyleSheet("ChatClient {background: QColor(66,0,73);}");
-
-    /* Customize the text fields */
-    ui->text_feed->setStyleSheet("QTextBrowser {border: 0px;background: QColor(66, 0, 73); font-family: Whitney; font-style: normal; font-size: 10pt; color: white;}");
-    ui->send_line->setStyleSheet("QLineEdit {border: 0px;border-radius: 3px; padding: 0 8px;background: QColor(78, 0, 104); font-family: Whitney; font-style: normal; font-size: 10pt; color: white;}");
+    /* Set fixed size */
+    ui->send_line->setFixedHeight(45);
+    ui->IP_line->setFixedWidth(100);
+    ui->PORT_line->setFixedWidth(100);
+    ui->nickname->setFixedWidth(100);
+    ui->connect_button->setFixedWidth(100);
+    ui->connect_button->setFixedHeight(20);
+    ui->disconnect_button->setFixedWidth(100);
+    ui->disconnect_button->setFixedHeight(20);
+    ui->sideWidget->setFixedWidth(120);
 
     isConnected = false;
 
@@ -48,21 +52,46 @@ void ChatClient::connect_server()
     PORT_connect = ui->PORT_line->text().split(" ")[0].toInt();
 
     if (!isConnected)
-        socket->connectToHost(IP_connect, PORT_connect);
+    {
+        if (ui->nickname->text() == "")
+        {
+            messageError = "Please enter a nickname!";
+            errorMessageBox->critical(this, "Error", messageError);
+        }
+        else if (ui->nickname->text().contains("~"))
+        {
+            messageError = "Invalid letter '~' in nickname\nPlease try again!";
+            errorMessageBox->critical(this, "Error", messageError);
+        }
+        else
+        {
+            socket->connectToHost(IP_connect, PORT_connect);
 
-    if (!socket->waitForConnected(100))
-    {
-        messageError = "Unable to connect to:\nIP:         ";
-        messageError.append(IP_connect);
-        messageError.append("\nPORT:   ");
-        messageError.append(QString::number(PORT_connect));
-        errorMessageBox->critical(this, "Error", messageError);
-    }
-    else
-    {
-        isConnected = true;
-        ui->send_line->setPlaceholderText("Enter message here");
-        ui->send_line->setEnabled(1);
+            if (!socket->waitForConnected(100))
+            {
+                messageError = "Unable to connect to:\nIP:         ";
+                messageError.append(IP_connect);
+                messageError.append("\nPORT:   ");
+                messageError.append(QString::number(PORT_connect));
+                errorMessageBox->critical(this, "Error", messageError);
+            }
+            else
+            {
+                isConnected = true;
+
+                nickname = ui->nickname->text();
+                message = nickname;
+                message.append(" is now online!");
+                socket->write(message.toUtf8());
+
+                nickname = ui->nickname->text();
+                ui->send_line->setPlaceholderText("Enter message here");
+                ui->send_line->setEnabled(1);
+                ui->IP_line->setDisabled(1);
+                ui->PORT_line->setDisabled(1);
+                ui->nickname->setDisabled(1);
+            }
+        }
     }
 }
 
@@ -74,6 +103,7 @@ void ChatClient::disconnect_server()
         messageDC.append(socket->peerName());
         messageDC.append(":");
         messageDC.append(QString::number(socket->localPort()));
+        messageDC.append(nickname);
 
         socket->write(messageDC.toUtf8());
 
@@ -81,6 +111,9 @@ void ChatClient::disconnect_server()
         ui->send_line->setDisabled(1);
         ui->send_line->setText("");
         ui->send_line->setPlaceholderText("");
+        ui->IP_line->setEnabled(1);
+        ui->PORT_line->setEnabled(1);
+        ui->nickname->setEnabled(1);
     }
     else
         errorMessageBox->critical(this, "Error", "You are not connected to a server...");
@@ -89,12 +122,17 @@ void ChatClient::disconnect_server()
 void ChatClient::send_text()
 {   
     message = ui->send_line->text();
-    ui->send_line->setText("");
 
-    if (!message.isEmpty() && isConnected)
-        socket->write(message.toUtf8());
-    else if (message.isEmpty() && isConnected)
+    if (message.isEmpty())
         errorMessageBox->critical(this, "Error", "You have nothing to send...");
+    else if (!message.isEmpty() && !message.contains("~"))
+    {
+        message = nickname;
+        message.append(": ");
+        message.append(ui->send_line->text());
+        ui->send_line->setText("");
+        socket->write(message.toUtf8());
+    }
 }
 
 void ChatClient::readFromServer()
@@ -105,5 +143,23 @@ void ChatClient::readFromServer()
         messageSound->play();
 
     server_message = socket->readAll();
-    ui->text_feed->append(server_message);
+
+    if (server_message.contains(" is now online!"))
+    {
+        server_message.remove(" is now online!");
+        server_message.remove(0, 8);
+        server_message.append(" online");
+        ui->users_online->append(server_message);
+    }
+    else if (server_message.contains(" has gone offline!"))
+    {
+        server_message.remove(" has gone offline!");
+        server_message.remove(0, 8);
+        server_message.append(" offline");
+        ui->users_online->append(server_message);
+    }
+    else
+    {
+        ui->text_feed->append(server_message);
+    }
 }

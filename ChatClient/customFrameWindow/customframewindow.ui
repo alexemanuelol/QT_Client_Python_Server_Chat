@@ -43,10 +43,7 @@
      <property name="styleSheet">
       <string notr="true">#windowFrame
 {
-	border:1px solid palette(highlight);
-	border-radius:0px 0px 0px 0px;
-	border-color:QColor(66, 0, 73);
-	background-color:palette(Window);
+	border:1px solid transparent;
 }</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -85,8 +82,8 @@
         <property name="styleSheet">
          <string notr="true">#windowTitlebar
 {
-	border: 0px none palette(base);
- 	background-color:QColor(66, 0, 73);
+	border: 0px none palette(high);
+ 	background-color:rgb(33, 34, 38);
  	height:20px;
 }</string>
         </property>
@@ -147,12 +144,7 @@
 
 #minimizeButton:hover
 {
-	background-color:palette(alternate-base);
-}
-
-#minimizeButton:pressed
-{
-	background-color:palette(highlight);
+	background-color: rgb(43, 44, 48);
 }</string>
            </property>
            <property name="text">
@@ -175,12 +167,7 @@
 
 #restoreButton:hover
 {
-	background-color:palette(alternate-base);
-}
-
-#restoreButton:pressed
-{
-	background-color:palette(highlight);
+	background-color: rgb(43, 44, 48);
 }</string>
            </property>
            <property name="text">
@@ -203,12 +190,7 @@
 
 #maximizeButton:hover
 {
-	background-color:palette(alternate-base);
-}
-
-#maximizeButton:pressed
-{
-	background-color:palette(highlight);
+	background-color: rgb(43, 44, 48);
 }</string>
            </property>
            <property name="text">
@@ -238,12 +220,7 @@
 
 #closeButton:hover
 {
-	background-color:rgb(255, 71,71);
-}
-
-#closeButton:pressed
-{
-	background-color:palette(highlight);
+	background-color:rgb(243, 71,71);
 }</string>
            </property>
           </widget>

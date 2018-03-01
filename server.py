@@ -1,5 +1,6 @@
 import socket
 import select
+import time
 
 def broadcast_data(message):
 	for socket in listOfSockets:
@@ -14,7 +15,7 @@ sockL.listen(10)
 listOfSockets = [sockL]
 dictOfAddresses = {}
 
-print("Lyssnar på port {}".format(port))
+print("Listening for port {}".format(port))
 
 while True:
 	tup = select.select(listOfSockets, [], [])
@@ -24,15 +25,18 @@ while True:
 		sockClient, addr = sockL.accept()
 		dictOfAddresses[sockClient] = addr
 		listOfSockets.append(sockClient)
-		broadcast_data("[%s:%s] (Uppkopplad)" % dictOfAddresses[sockClient])
 	else:
+		localTime = time.strftime("%H:%M")
 		data = sock.recv(1000)
-		if not data or data.decode("utf-8") == "disconnect%s:%s" % dictOfAddresses[sock]:
-			broadcast_data("[%s:%s] (Nedkopplad)" % dictOfAddresses[sock])
+		if not data or data.decode("utf-8").startswith("disconnect%s:%s" % dictOfAddresses[sock]):
+			length = len("disconnect%s:%s" % dictOfAddresses[sock])
+			data = data.decode("utf-8")
+			nickname = data[length:]
+			broadcast_data("[{}] ".format(localTime) + nickname + " has gone offline!")
 			sock.close()
 			listOfSockets.remove(sock)
 			del dictOfAddresses[sock]
 		else:
-			broadcast_data("[%s:%s] " % dictOfAddresses[sock] + data.decode("utf-8"))
+			broadcast_data("[{}] ".format(localTime) + data.decode("utf-8"))
 
 sockL.close()

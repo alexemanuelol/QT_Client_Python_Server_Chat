@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QMediaPlayer>
+#include <QScrollBar>
+#include <qDebug>
 
 namespace Ui {
 class ChatClient;
@@ -30,6 +32,7 @@ private:
     QString message;
     QString messageDC;
     QString server_message;
+    QString nickname;
 
     QMediaPlayer* messageSound;
 

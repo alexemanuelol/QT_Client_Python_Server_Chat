@@ -1,5 +1,6 @@
 #include <QGraphicsDropShadowEffect>
 #include "customframewindow.h"
+#include <qdebug.h>
 
 CustomFrameWindow::CustomFrameWindow(QWidget *parent): QWidget(parent)
 {
@@ -14,6 +15,15 @@ CustomFrameWindow::CustomFrameWindow(QWidget *parent): QWidget(parent)
 
     restoreButton->setVisible(false);
 
+    this->
+
+    /* Fix size of title bar and buttons */
+    windowTitlebar->setFixedHeight(22);
+    closeButton->setFixedWidth(28);
+    maximizeButton->setFixedWidth(28);
+    minimizeButton->setFixedWidth(28);
+    restoreButton->setFixedWidth(28);
+
     /* Shadow under window title text */
     QGraphicsDropShadowEffect *textShadow = new QGraphicsDropShadowEffect;
     textShadow->setBlurRadius(4.0);
@@ -23,7 +33,7 @@ CustomFrameWindow::CustomFrameWindow(QWidget *parent): QWidget(parent)
 
     /* Window Shadow */
     QGraphicsDropShadowEffect *windowShadow = new QGraphicsDropShadowEffect;
-    windowShadow->setBlurRadius(5.0);
+    windowShadow->setBlurRadius(9.0);
     windowShadow->setColor(Qt::black);
     windowShadow->setOffset(0.0);
     windowFrame->setGraphicsEffect(windowShadow);
